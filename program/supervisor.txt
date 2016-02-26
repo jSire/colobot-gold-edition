@@ -1,0 +1,23 @@
+extern void object::supervisor()
+{
+	// //////////////////////////////////////////////////////////////////
+	// Program to be given to the designated "supervisor" bot.
+	//
+	// This allows orchestrated control of the other bots and provides
+	// a single location for shared class definitions.
+	//
+	// "producing" a PracticeBot and assigning it this program is
+	// a workaround for the lack of central-code ability within CBot.
+	//
+	// Should better programming support ever be implemented, this code
+	// would exist externally and only bots relevant to game play be
+	// neccessary. Simple programs would then be manually (or automatically
+	// in a code battle) assigned to designate "roles" for each bot; the code
+	// and classes being externally accessible like a proper "include" system.
+	//
+	// For now...it is an ugly monolith that will require manually restarting
+	// programs on all dependent bots any time a change is made here. :-/
+	// //////////////////////////////////////////////////////////////////////
+	
+	
+}

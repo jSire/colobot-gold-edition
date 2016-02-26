@@ -1,0 +1,62 @@
+extern void object::placeFlagPerimeter()
+{
+	// NOTE: Line drawing still isn't feasible to use:
+	// * Lines can be broken/oddly curved at the start/finish.
+	// * Can not currently remove lines once drawn.
+	// * Bots cannot "detect" lines like they can flags.
+	
+	
+	// Constants that should be exported!
+	
+	object DZ = radar( YellowFlag );
+	point CENTER ( DZ.position.x, DZ.position.y );
+	float RADIUS = 3;
+	int SIDES = 8;
+	//int LINE_COLOR = Red;
+	//float LINE_WIDTH = 0.25;
+	
+	// Create a 2D array of scaled x/y values to use as a template.
+	// As this is a virtual point-set, using float vs. point also
+	// helps prevent it being treated like an actual set of points
+	// that bots can access.
+	
+	float fVertices[][];
+	float theta = 360 / SIDES;
+	
+	for( int i = 0 ; i < SIDES ; i++ )
+	{
+		fVertices[0][i] = RADIUS * cos( i * theta );
+		fVertices[1][i] = RADIUS * sin( i * theta );
+	}
+	
+	
+	// Map the 2D array of x/y values onto the adjusted origin point
+	// and save as a point array the bot can use.
+	
+	point pFlagLocations[];
+	
+	for( int i = 0 ; i < sizeof( fVertices[0] ) ; i++ )
+	{
+		pFlagLocations[i].x = CENTER.x + fVertices[0][i];
+		pFlagLocations[i].y = CENTER.y + fVertices[1][i];
+	}
+	
+	
+	// Start at the east-most location and place flags,
+	// drawing a line along the new perimeter as well.
+	
+	//goto( pFlagLocations[0] );
+	//pendown( LINE_COLOR, LINE_WIDTH );
+	for( int i = 0 ; i < sizeof( pFlagLocations ) ; i++ )
+	{
+		goto( pFlagLocations[i] );
+		produce( RedFlag );
+	}
+	//goto( pFlagLocations[0] );
+	//penup();
+	
+	
+	// Exit newly created perimeter, making it available for "use."
+	
+	goto( space( CENTER, 2 *RADIUS, 3 * RADIUS, 3 ) );
+}
