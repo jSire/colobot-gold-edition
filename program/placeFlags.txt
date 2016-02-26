@@ -1,11 +1,5 @@
 extern void object::placeFlagPerimeter()
 {
-	// NOTE: Line drawing still isn't feasible to use:
-	// * Lines can be broken/oddly curved at the start/finish.
-	// * Can not currently remove lines once drawn.
-	// * Bots cannot "detect" lines like they can flags.
-	
-	
 	// Constants that should be exported!
 	
 	object DZ = radar( YellowFlag );
@@ -45,15 +39,11 @@ extern void object::placeFlagPerimeter()
 	// Start at the east-most location and place flags,
 	// drawing a line along the new perimeter as well.
 	
-	//goto( pFlagLocations[0] );
-	//pendown( LINE_COLOR, LINE_WIDTH );
 	for( int i = 0 ; i < sizeof( pFlagLocations ) ; i++ )
 	{
 		goto( pFlagLocations[i] );
 		produce( RedFlag );
 	}
-	//goto( pFlagLocations[0] );
-	//penup();
 	
 	
 	// Exit newly created perimeter, making it available for "use."
