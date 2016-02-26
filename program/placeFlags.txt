@@ -5,27 +5,23 @@ extern void object::placeFlagPerimeter()
 	object DZ = radar( YellowFlag );
 	point CENTER ( DZ.position.x, DZ.position.y );
 	float RADIUS = 3;
-	int SIDES = 8;
-	//int LINE_COLOR = Red;
-	//float LINE_WIDTH = 0.25;
+	int NUM_VERTICES = 8;
 	
+	
+	// TODO: Create a new class of "perimeter-type" objects, possibly pulling from a more generic "geometry" class.
 	// Create a 2D array of scaled x/y values to use as a template.
-	// As this is a virtual point-set, using float vs. point also
-	// helps prevent it being treated like an actual set of points
-	// that bots can access.
 	
 	float fVertices[][];
-	float theta = 360 / SIDES;
+	float theta = 360 / NUM_VERTICES;
 	
-	for( int i = 0 ; i < SIDES ; i++ )
+	for( int i = 0 ; i < NUM_VERTICES ; i++ )
 	{
 		fVertices[0][i] = RADIUS * cos( i * theta );
 		fVertices[1][i] = RADIUS * sin( i * theta );
 	}
 	
 	
-	// Map the 2D array of x/y values onto the adjusted origin point
-	// and save as a point array the bot can use.
+	// Map the 2D array of x/y values onto the adjusted origin point.
 	
 	point pFlagLocations[];
 	
@@ -36,17 +32,11 @@ extern void object::placeFlagPerimeter()
 	}
 	
 	
-	// Start at the east-most location and place flags,
-	// drawing a line along the new perimeter as well.
+	// Directly create flag perimeter (rather than driving around).
 	
 	for( int i = 0 ; i < sizeof( pFlagLocations ) ; i++ )
 	{
-		goto( pFlagLocations[i] );
-		produce( RedFlag );
+		produce( pFlagLocations[i], 0, RedFlag );
 	}
 	
-	
-	// Exit newly created perimeter, making it available for "use."
-	
-	goto( space( CENTER, 2 *RADIUS, 3 * RADIUS, 3 ) );
 }
